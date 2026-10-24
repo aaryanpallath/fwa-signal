@@ -23,8 +23,20 @@ from .llm import LLM, OllamaLLM
 from .nl2sql import ask
 from .summary import facts, summarize
 
-DSN = os.environ.get("FWA_DATABASE_URL", "postgresql://fwa_reader@localhost:54329/fwa")
-READONLY_DSN = os.environ.get("FWA_READONLY_URL", DSN)
+# The API only ever connects as the restricted reader; it never falls back to an owner connection string.
+READONLY_DSN = os.environ.get("FWA_READONLY_URL", "postgresql://fwa_reader@localhost:54329/fwa")
+
+
+def assert_restricted(dsn: str) -> None:
+    """Refuse to serve LLM-written SQL through a role that could read or change more than the API views."""
+    with psycopg.connect(dsn) as conn:
+        user, superuser, core, raw, create = conn.execute(
+            """SELECT current_user, rolsuper, has_schema_privilege(current_user, 'core', 'USAGE'),
+                      has_schema_privilege(current_user, 'raw', 'USAGE'),
+                      has_schema_privilege(current_user, 'mart', 'CREATE')
+               FROM pg_roles WHERE rolname = current_user""").fetchone()
+    if superuser or core or raw or create:
+        raise RuntimeError(f"FWA_READONLY_URL connects as {user!r}, which is not the restricted read-only role")
 
 
 class Question(BaseModel):
@@ -32,7 +44,7 @@ class Question(BaseModel):
 
 
 def _rows(sql: str, params: tuple = ()) -> list[dict[str, Any]]:
-    with psycopg.connect(READONLY_DSN) as conn:
+    with psycopg.connect(READONLY_DSN, options="-c statement_timeout=5000") as conn:
         conn.read_only = True
         cur = conn.execute(sql, params)
         cols = [d.name for d in cur.description]
@@ -43,6 +55,7 @@ def create_app(llm: LLM | None = None) -> FastAPI:
     app = FastAPI(title="fwa-signal", version="0.1.0",
                   description="Medicare Part D prescribing leads for program-integrity review. "
                               "Scores are statistical leads, not findings of wrongdoing.")
+    assert_restricted(READONLY_DSN)
     model = llm or OllamaLLM()
     llm_slot = threading.Semaphore(1)  # one local-model call at a time
 
@@ -92,4 +105,5 @@ def create_app(llm: LLM | None = None) -> FastAPI:
     return app
 
 
-app = create_app()
+if os.environ.get("FWA_NO_APP") != "1":  # tests build their own app against a throwaway database
+    app = create_app()

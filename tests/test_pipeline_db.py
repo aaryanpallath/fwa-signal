@@ -132,7 +132,10 @@ def test_read_only_role_and_api(db):
     with psycopg.connect(ro) as c, pytest.raises(psycopg.errors.ReadOnlySqlTransaction):
         c.execute("CREATE TABLE mart.x (a int)")
 
-    api_mod.READONLY_DSN = ro
+    api_mod.READONLY_DSN = dsn                       # the owner role must be refused ...
+    with pytest.raises(RuntimeError, match="not the restricted read-only role"):
+        api_mod.create_app(ScriptedLLM([]))
+    api_mod.READONLY_DSN = ro                        # ... and the reader accepted
     llm = ScriptedLLM(['{"sql": "SELECT count(*) FROM mart.provider_risk WHERE state = \'IN\'"}',
                        '{"sql": "DELETE FROM mart.risk"}',
                        "Extreme X, a Family Practice prescriber in Town, IN, had 800 claims.",

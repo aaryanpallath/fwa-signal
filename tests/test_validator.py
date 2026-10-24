@@ -25,6 +25,8 @@ def test_allowed(sql):
     ("SELECT pg_sleep(30)", "pg_sleep"),
     ("SELECT set_config('statement_timeout', '0', false)", "set_config"),
     ("SELECT * FROM otherdb.mart.provider_risk", "cross-database"),
+    ("WITH prescriber AS (SELECT 1) SELECT * FROM core.prescriber", "core.prescriber is not allowed"),
+    ("WITH PRESCRIBER AS (SELECT 1) SELECT * FROM core.PRESCRIBER", "not allowed"),
     ("SELECT * INTO mart.copy FROM mart.provider_risk", "not allowed"),
     ("", "cannot be answered"),
     ("this is not sql", "not valid SQL|only SELECT"),

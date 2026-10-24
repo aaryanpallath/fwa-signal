@@ -74,12 +74,14 @@ def validate(sql: str) -> str:
         if isinstance(node, (exp.Insert, exp.Update, exp.Delete, exp.Drop, exp.Create, exp.Alter, exp.Command,
                              exp.Into, exp.Copy if hasattr(exp, "Copy") else exp.Command)):
             raise UnsafeSQL(f"{node.key} is not allowed")
-    ctes = {c.alias_or_name for c in tree.find_all(exp.CTE)}
+    ctes = {c.alias_or_name.lower() for c in tree.find_all(exp.CTE)}
     for t in tree.find_all(exp.Table):
         name = (f"{t.db}.{t.name}" if t.db else t.name).lower()
         if t.catalog:
             raise UnsafeSQL("cross-database references are not allowed")
-        if name not in ALLOWED_TABLES and t.name not in ctes:
+        # a CTE can only be referenced unqualified; "core.x" is never the CTE "x"
+        is_cte = not t.db and t.name.lower() in ctes
+        if name not in ALLOWED_TABLES and not is_cte:
             raise UnsafeSQL(f"table {name} is not allowed")
     for f in tree.find_all(exp.Func):
         if isinstance(f, (exp.Binary, exp.Unary, exp.Connector, exp.Predicate)):
@@ -119,7 +121,7 @@ def generate_sql(llm: LLM, question: str) -> tuple[str, float]:
 
 
 def run_readonly(readonly_dsn: str, sql: str) -> tuple[list[str], list[list]]:
-    with psycopg.connect(readonly_dsn) as conn:
+    with psycopg.connect(readonly_dsn, options="-c statement_timeout=5000") as conn:
         conn.read_only = True
         with conn.transaction():
             cur = conn.execute(sql)

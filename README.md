@@ -103,7 +103,8 @@ FastAPI ──▶ /leads /providers/{npi} /compliance/... ──┐
   Only individual prescribers with at least 50 claims are scored. CMS-suppressed small counts stay NULL.
 * **Peers:** the same specialty in the same state when there are at least 30 of them, otherwise the
   same specialty nationally.
-* **Defence in depth for LLM-written SQL:** the validator allows one `SELECT` over two allow-listed
+* **Defence in depth for LLM-written SQL:** the API refuses to start unless it connects as the restricted
+  reader. The validator allows one `SELECT` over two allow-listed
   views and a short list of functions, and caps rows. Behind it, `fwa_reader` can only `SELECT` those
   views, with `default_transaction_read_only` and `statement_timeout` set. Question text only ever
   becomes part of the prompt, never part of the SQL.
@@ -126,7 +127,7 @@ uv run fwa build --partd data/raw/partd_prescribers_2022.csv --leie data/raw/lei
 uv run fwa evaluate     # unsupervised scores vs later exclusions
 uv run fwa model        # temporal-holdout models; also creates the read-only role and API views
 uv run fwa eval-llm     # question answering, adversarial prompts, summaries
-uv run fwa serve        # http://127.0.0.1:8000/docs
+uv run fwa serve        # http://127.0.0.1:8000/docs (FWA_READONLY_URL must be the fwa_reader role; checked at startup)
 uv run pytest -q        # unit + end-to-end tests (PostgreSQL on FWA_TEST_ADMIN_URL)
 ```
 
@@ -157,7 +158,7 @@ Each year's build takes about 90 s on an M4 laptop (loading 1.3 M rows takes 6 s
   not be exposed beyond localhost as is.
 
 ## Testing
-27 tests:
+29 tests:
 * the SQL validator (allowed and blocked queries, including the adversarial cases);
 * the summary fact check and template;
 * AUC (checked against scikit-learn, with ties), Wilson intervals and the grading function;
