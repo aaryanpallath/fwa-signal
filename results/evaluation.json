@@ -1,0 +1,279 @@
+{
+  "population": 1022933,
+  "later_excluded": 539,
+  "base_rate": 0.0005269162300952262,
+  "rankings": {
+    "composite (mean of top-2 peer surprise scores)": {
+      "auc": 0.5816,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 1,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.00035,
+          0.01124
+        ],
+        "lift": 3.8,
+        "recall": 0.0019
+      },
+      "top_1000": {
+        "hits": 3,
+        "precision": 0.003,
+        "precision_95ci": [
+          0.00102,
+          0.00878
+        ],
+        "lift": 5.69,
+        "recall": 0.0056
+      },
+      "top_5000": {
+        "hits": 16,
+        "precision": 0.0032,
+        "precision_95ci": [
+          0.00197,
+          0.00519
+        ],
+        "lift": 6.07,
+        "recall": 0.0297
+      },
+      "top_10000": {
+        "hits": 20,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.0013,
+          0.00309
+        ],
+        "lift": 3.8,
+        "recall": 0.0371
+      }
+    },
+    "max single peer surprise score": {
+      "auc": 0.5741,
+      "top_100": {
+        "hits": 1,
+        "precision": 0.01,
+        "precision_95ci": [
+          0.00177,
+          0.05449
+        ],
+        "lift": 18.98,
+        "recall": 0.0019
+      },
+      "top_500": {
+        "hits": 1,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.00035,
+          0.01124
+        ],
+        "lift": 3.8,
+        "recall": 0.0019
+      },
+      "top_1000": {
+        "hits": 1,
+        "precision": 0.001,
+        "precision_95ci": [
+          0.00018,
+          0.00564
+        ],
+        "lift": 1.9,
+        "recall": 0.0019
+      },
+      "top_5000": {
+        "hits": 6,
+        "precision": 0.0012,
+        "precision_95ci": [
+          0.00055,
+          0.00262
+        ],
+        "lift": 2.28,
+        "recall": 0.0111
+      },
+      "top_10000": {
+        "hits": 14,
+        "precision": 0.0014,
+        "precision_95ci": [
+          0.00083,
+          0.00235
+        ],
+        "lift": 2.66,
+        "recall": 0.026
+      }
+    },
+    "raw opioid share (no peer adjustment)": {
+      "auc": 0.5481,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.00762
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_1000": {
+        "hits": 1,
+        "precision": 0.001,
+        "precision_95ci": [
+          0.00018,
+          0.00564
+        ],
+        "lift": 1.9,
+        "recall": 0.0019
+      },
+      "top_5000": {
+        "hits": 6,
+        "precision": 0.0012,
+        "precision_95ci": [
+          0.00055,
+          0.00262
+        ],
+        "lift": 2.28,
+        "recall": 0.0111
+      },
+      "top_10000": {
+        "hits": 9,
+        "precision": 0.0009,
+        "precision_95ci": [
+          0.00047,
+          0.00171
+        ],
+        "lift": 1.71,
+        "recall": 0.0167
+      }
+    },
+    "raw cost per beneficiary (no peer adjustment)": {
+      "auc": 0.5808,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.00762
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_1000": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.00383
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_5000": {
+        "hits": 1,
+        "precision": 0.0002,
+        "precision_95ci": [
+          4e-05,
+          0.00113
+        ],
+        "lift": 0.38,
+        "recall": 0.0019
+      },
+      "top_10000": {
+        "hits": 2,
+        "precision": 0.0002,
+        "precision_95ci": [
+          5e-05,
+          0.00073
+        ],
+        "lift": 0.38,
+        "recall": 0.0037
+      }
+    },
+    "prescribing volume (total claims)": {
+      "auc": 0.5765,
+      "top_100": {
+        "hits": 2,
+        "precision": 0.02,
+        "precision_95ci": [
+          0.0055,
+          0.07001
+        ],
+        "lift": 37.96,
+        "recall": 0.0037
+      },
+      "top_500": {
+        "hits": 3,
+        "precision": 0.006,
+        "precision_95ci": [
+          0.00204,
+          0.01749
+        ],
+        "lift": 11.39,
+        "recall": 0.0056
+      },
+      "top_1000": {
+        "hits": 5,
+        "precision": 0.005,
+        "precision_95ci": [
+          0.00214,
+          0.01165
+        ],
+        "lift": 9.49,
+        "recall": 0.0093
+      },
+      "top_5000": {
+        "hits": 21,
+        "precision": 0.0042,
+        "precision_95ci": [
+          0.00275,
+          0.00641
+        ],
+        "lift": 7.97,
+        "recall": 0.039
+      },
+      "top_10000": {
+        "hits": 29,
+        "precision": 0.0029,
+        "precision_95ci": [
+          0.00202,
+          0.00416
+        ],
+        "lift": 5.5,
+        "recall": 0.0538
+      }
+    }
+  },
+  "random_expected_hits": {
+    "top_100": 0.05,
+    "top_500": 0.26,
+    "top_1000": 0.53,
+    "top_5000": 2.63,
+    "top_10000": 5.27
+  }
+}

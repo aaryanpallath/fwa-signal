@@ -1,0 +1,324 @@
+{
+  "train": {
+    "year": 2021,
+    "label": "excluded in 2022",
+    "n": 983204,
+    "positives": 90
+  },
+  "test": {
+    "year": 2022,
+    "label": "excluded 2023-01-01 or later",
+    "n": 1023331,
+    "positives": 538,
+    "base_rate": 0.000526
+  },
+  "gbm_iterations": 35,
+  "models": {
+    "gradient boosting (all features)": {
+      "auc": 0.6259,
+      "average_precision": 0.00107,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 2,
+        "precision": 0.004,
+        "precision_95ci": [
+          0.0011,
+          0.01447
+        ],
+        "lift": 7.61,
+        "recall": 0.0037
+      },
+      "top_1000": {
+        "hits": 3,
+        "precision": 0.003,
+        "precision_95ci": [
+          0.00102,
+          0.00878
+        ],
+        "lift": 5.71,
+        "recall": 0.0056
+      },
+      "top_5000": {
+        "hits": 13,
+        "precision": 0.0026,
+        "precision_95ci": [
+          0.00152,
+          0.00444
+        ],
+        "lift": 4.95,
+        "recall": 0.0242
+      },
+      "top_10000": {
+        "hits": 23,
+        "precision": 0.0023,
+        "precision_95ci": [
+          0.00153,
+          0.00345
+        ],
+        "lift": 4.37,
+        "recall": 0.0428
+      }
+    },
+    "logistic regression (all features)": {
+      "auc": 0.6513,
+      "average_precision": 0.00101,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 1,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.00035,
+          0.01124
+        ],
+        "lift": 3.8,
+        "recall": 0.0019
+      },
+      "top_1000": {
+        "hits": 1,
+        "precision": 0.001,
+        "precision_95ci": [
+          0.00018,
+          0.00564
+        ],
+        "lift": 1.9,
+        "recall": 0.0019
+      },
+      "top_5000": {
+        "hits": 2,
+        "precision": 0.0004,
+        "precision_95ci": [
+          0.00011,
+          0.00146
+        ],
+        "lift": 0.76,
+        "recall": 0.0037
+      },
+      "top_10000": {
+        "hits": 14,
+        "precision": 0.0014,
+        "precision_95ci": [
+          0.00083,
+          0.00235
+        ],
+        "lift": 2.66,
+        "recall": 0.026
+      }
+    },
+    "baseline: prescribing volume": {
+      "auc": 0.5758,
+      "average_precision": 0.00129,
+      "top_100": {
+        "hits": 2,
+        "precision": 0.02,
+        "precision_95ci": [
+          0.0055,
+          0.07001
+        ],
+        "lift": 38.04,
+        "recall": 0.0037
+      },
+      "top_500": {
+        "hits": 3,
+        "precision": 0.006,
+        "precision_95ci": [
+          0.00204,
+          0.01749
+        ],
+        "lift": 11.41,
+        "recall": 0.0056
+      },
+      "top_1000": {
+        "hits": 5,
+        "precision": 0.005,
+        "precision_95ci": [
+          0.00214,
+          0.01165
+        ],
+        "lift": 9.51,
+        "recall": 0.0093
+      },
+      "top_5000": {
+        "hits": 20,
+        "precision": 0.004,
+        "precision_95ci": [
+          0.00259,
+          0.00617
+        ],
+        "lift": 7.61,
+        "recall": 0.0372
+      },
+      "top_10000": {
+        "hits": 28,
+        "precision": 0.0028,
+        "precision_95ci": [
+          0.00194,
+          0.00404
+        ],
+        "lift": 5.33,
+        "recall": 0.052
+      }
+    },
+    "baseline: raw opioid share": {
+      "auc": 0.548,
+      "average_precision": 0.00064,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.00762
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_1000": {
+        "hits": 1,
+        "precision": 0.001,
+        "precision_95ci": [
+          0.00018,
+          0.00564
+        ],
+        "lift": 1.9,
+        "recall": 0.0019
+      },
+      "top_5000": {
+        "hits": 6,
+        "precision": 0.0012,
+        "precision_95ci": [
+          0.00055,
+          0.00262
+        ],
+        "lift": 2.28,
+        "recall": 0.0112
+      },
+      "top_10000": {
+        "hits": 9,
+        "precision": 0.0009,
+        "precision_95ci": [
+          0.00047,
+          0.00171
+        ],
+        "lift": 1.71,
+        "recall": 0.0167
+      }
+    },
+    "baseline: peer composite (unsupervised)": {
+      "auc": 0.582,
+      "average_precision": 0.00094,
+      "top_100": {
+        "hits": 0,
+        "precision": 0.0,
+        "precision_95ci": [
+          0.0,
+          0.03699
+        ],
+        "lift": 0.0,
+        "recall": 0.0
+      },
+      "top_500": {
+        "hits": 1,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.00035,
+          0.01124
+        ],
+        "lift": 3.8,
+        "recall": 0.0019
+      },
+      "top_1000": {
+        "hits": 3,
+        "precision": 0.003,
+        "precision_95ci": [
+          0.00102,
+          0.00878
+        ],
+        "lift": 5.71,
+        "recall": 0.0056
+      },
+      "top_5000": {
+        "hits": 14,
+        "precision": 0.0028,
+        "precision_95ci": [
+          0.00167,
+          0.00469
+        ],
+        "lift": 5.33,
+        "recall": 0.026
+      },
+      "top_10000": {
+        "hits": 20,
+        "precision": 0.002,
+        "precision_95ci": [
+          0.0013,
+          0.00309
+        ],
+        "lift": 3.8,
+        "recall": 0.0372
+      }
+    }
+  },
+  "auc_difference_gbm_minus_volume": {
+    "mean": 0.0497,
+    "ci95": [
+      0.0115,
+      0.0842
+    ]
+  },
+  "auc_difference_logreg_minus_volume": {
+    "mean": 0.0755,
+    "ci95": [
+      0.0345,
+      0.1074
+    ]
+  },
+  "gbm_permutation_importance_auc_drop": {
+    "specialty": 0.0839,
+    "state": 0.0425,
+    "cost_per_beneficiary": 0.0166,
+    "days_per_claim": 0.009,
+    "surprise_cost_per_beneficiary": 0.008,
+    "surprise_days_per_claim": 0.0069,
+    "brand_share": 0.0039,
+    "log_beneficiaries": 0.0029
+  },
+  "logreg_largest_coefficients": {
+    "specialty_Physical Medicine and Rehabilitation": 6.916,
+    "state_ND": 6.822,
+    "specialty_General Practice": 6.442,
+    "state_VT": 6.259,
+    "specialty_Cardiology": 5.97,
+    "state_MT": 5.306,
+    "specialty_Family Practice": 5.063,
+    "state_PR": 4.914,
+    "specialty_Student in an Organized Health Care Education/Training Program": -4.617,
+    "state_NM": 4.562
+  }
+}

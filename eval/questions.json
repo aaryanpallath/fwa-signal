@@ -1,0 +1,106 @@
+[
+ {
+  "q": "How many prescribers are in the data?",
+  "gold": "SELECT count(*) FROM mart.provider_risk"
+ },
+ {
+  "q": "How many nurse practitioners are there in Indiana?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE specialty = 'Nurse Practitioner' AND state = 'IN'"
+ },
+ {
+  "q": "What is the average opioid share for Family Practice prescribers?",
+  "gold": "SELECT avg(opioid_share) FROM mart.provider_risk WHERE specialty = 'Family Practice'"
+ },
+ {
+  "q": "Which state has the most Pain Management prescribers?",
+  "gold": "SELECT state FROM mart.provider_risk WHERE specialty = 'Pain Management' GROUP BY state ORDER BY count(*) DESC LIMIT 1",
+  "original_gold": "SELECT state, count(*) AS n FROM mart.provider_risk WHERE specialty = 'Pain Management' GROUP BY state ORDER BY n DESC LIMIT 1",
+  "revision_note": "reference returned an extra count column the question did not ask for"
+ },
+ {
+  "q": "List the NPIs of the 5 highest-risk prescribers in Ohio.",
+  "gold": "SELECT npi FROM mart.provider_risk WHERE state = 'OH' ORDER BY rank_logreg LIMIT 5"
+ },
+ {
+  "q": "How many prescribers are excluded but still prescribing?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE excluded_but_prescribing"
+ },
+ {
+  "q": "What is the total Part D drug cost for prescribers in Vermont?",
+  "gold": "SELECT sum(drug_cost) FROM mart.provider_risk WHERE state = 'VT'"
+ },
+ {
+  "q": "Which 3 specialties have the highest average cost per beneficiary? Only include specialties with at least 1000 prescribers.",
+  "gold": "SELECT specialty FROM mart.provider_risk GROUP BY specialty HAVING count(*) >= 1000 ORDER BY avg(cost_per_beneficiary) DESC NULLS LAST LIMIT 3"
+ },
+ {
+  "q": "How many prescribers have an opioid share above 50%?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE opioid_share > 0.5"
+ },
+ {
+  "q": "What is the median opioid share for Internal Medicine nationally?",
+  "gold": "SELECT median FROM mart.peer_stats WHERE specialty = 'Internal Medicine' AND state = '*' AND feature = 'opioid_share'"
+ },
+ {
+  "q": "How many dentists in California wrote more than 1000 claims?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE specialty = 'Dentist' AND state = 'CA' AND claims > 1000"
+ },
+ {
+  "q": "Which city in Texas has the most prescribers?",
+  "gold": "SELECT city FROM mart.provider_risk WHERE state = 'TX' GROUP BY city ORDER BY count(*) DESC LIMIT 1",
+  "original_gold": "SELECT city, count(*) AS n FROM mart.provider_risk WHERE state = 'TX' GROUP BY city ORDER BY n DESC LIMIT 1",
+  "revision_note": "reference returned an extra count column the question did not ask for"
+ },
+ {
+  "q": "What is the highest outlier score among psychiatrists?",
+  "gold": "SELECT max(score) FROM mart.provider_risk WHERE specialty = 'Psychiatry'"
+ },
+ {
+  "q": "How many prescribers are in the top 100 by risk and also in the top 1000 by outlier rank?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE rank_logreg <= 100 AND rank <= 1000"
+ },
+ {
+  "q": "Average number of beneficiaries per prescriber in New York",
+  "gold": "SELECT avg(beneficiaries) FROM mart.provider_risk WHERE state = 'NY'"
+ },
+ {
+  "q": "How many distinct specialties are there?",
+  "gold": "SELECT count(DISTINCT specialty) FROM mart.provider_risk"
+ },
+ {
+  "q": "What share of General Practice prescribers have any long-acting opioid claims?",
+  "gold": "SELECT avg(CASE WHEN long_acting_opioid_share > 0 THEN 1.0 ELSE 0 END) FROM mart.provider_risk WHERE specialty = 'General Practice'",
+  "original_gold": "SELECT avg(CASE WHEN long_acting_opioid_share > 0 THEN 1.0 ELSE 0 END) FROM mart.provider_risk WHERE specialty = 'General Practice' AND long_acting_opioid_share IS NOT NULL",
+  "revision_note": "reference silently excluded prescribers without opioid claims; question asks about all of them"
+ },
+ {
+  "q": "Which 5 states have the highest average brand-name share?",
+  "gold": "SELECT state FROM mart.provider_risk GROUP BY state ORDER BY avg(brand_share) DESC NULLS LAST LIMIT 5"
+ },
+ {
+  "q": "How many physician assistants have a days-per-claim above 60?",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE specialty = 'Physician Assistant' AND days_per_claim > 60"
+ },
+ {
+  "q": "What is the total number of Part D claims across all cardiologists?",
+  "gold": "SELECT sum(claims) FROM mart.provider_risk WHERE specialty = 'Cardiology'"
+ },
+ {
+  "q": "Number of prescribers in Indiana whose risk rank is in the top 10,000",
+  "gold": "SELECT count(*) FROM mart.provider_risk WHERE state = 'IN' AND rank_logreg <= 10000"
+ },
+ {
+  "q": "What is the average outlier score of prescribers flagged for cost per beneficiary?",
+  "gold": "SELECT avg(score) FROM mart.provider_risk WHERE 'cost_per_beneficiary' = ANY(reasons)"
+ },
+ {
+  "q": "How many peer groups (specialty and state) have more than 500 Family Practice prescribers for opioid share?",
+  "gold": "SELECT count(*) FROM mart.peer_stats WHERE specialty = 'Family Practice' AND state <> '*' AND feature = 'opioid_share' AND n > 500"
+ },
+ {
+  "q": "Which specialty has the most prescribers in Montana?",
+  "gold": "SELECT specialty FROM mart.provider_risk WHERE state = 'MT' GROUP BY specialty ORDER BY count(*) DESC LIMIT 1",
+  "original_gold": "SELECT specialty, count(*) AS n FROM mart.provider_risk WHERE state = 'MT' GROUP BY specialty ORDER BY n DESC LIMIT 1",
+  "revision_note": "reference returned an extra count column the question did not ask for"
+ }
+]

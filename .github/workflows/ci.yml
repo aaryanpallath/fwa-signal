@@ -1,0 +1,27 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: fwa
+          POSTGRES_DB: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust   # throwaway CI database only
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U fwa" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      FWA_TEST_ADMIN_URL: postgresql://fwa@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+      - run: uv sync
+      - name: Lint
+        run: uv run ruff check src tests
+      - name: Tests (validator, metrics, and the full pipeline + API against PostgreSQL)
+        run: uv run pytest -q

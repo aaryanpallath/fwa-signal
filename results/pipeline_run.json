@@ -1,0 +1,15 @@
+{
+  "raw_prescribers": 1332309,
+  "core_prescribers": 1332309,
+  "npi_not_10_digits": 0,
+  "claims_unparsed": 0,
+  "ratios_out_of_range": 0,
+  "scored_prescribers": 1022933,
+  "exclusions_with_npi": 8924,
+  "excluded_but_prescribing": 2,
+  "timings": {
+    "load_s": 5.6,
+    "10_core_s": 3.9,
+    "20_mart_s": 45.3
+  }
+}
